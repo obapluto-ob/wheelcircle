@@ -11,3 +11,6 @@ dev/*.db-wal
 /dev/*.png
 dev/*.local.env
 dev/wheel.db*
+
+# Local env files
+dev/*.local.env

@@ -1,0 +1,42 @@
+{
+  "name": "THE WHEEL — Group savings engine",
+  "short_name": "THE WHEEL",
+  "description": "A private circle savings engine: prepaid seats, posted turn prices, and a recorded ledger for every shilling.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "background_color": "#0b0c11",
+  "theme_color": "#0b0c11",
+  "orientation": "portrait-primary",
+  "categories": ["finance", "productivity"],
+  "icons": [
+    {
+      "src": "icon-1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Open the wheel",
+      "short_name": "Wheel",
+      "url": "/#/g/auction",
+      "icons": [{ "src": "icon-1024.png", "sizes": "1024x1024", "type": "image/png" }]
+    }
+  ]
+}

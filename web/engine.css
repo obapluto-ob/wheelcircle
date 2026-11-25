@@ -1,0 +1,238 @@
+/* Funding, not chance: the chamber is a real pressure machine. The plate art
+   drives the idle motion; every tempo tightens as funding rises, and the whole
+   thing locks when the turn is allocated. Scoped, pausable, reduced-motion safe. */
+.wheel-engine {
+  --engine-accent: var(--cyan, #61e7f2);
+  --engine-duration: calc(680ms * var(--wheel-motion-scale, var(--site-motion, 1)));
+  min-width: 0;
+  width: 100%;
+  padding: var(--pad, 22px);
+  border: 1px solid var(--line, #293026);
+  border-radius: var(--rad, 14px);
+  background: var(--panel, #11150f);
+  color: var(--bone, #eef1e6);
+  color-scheme: dark;
+  font-size: 13px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+.wheel-engine *, .wheel-engine *::before, .wheel-engine *::after { box-sizing: border-box; }
+.wheel-engine[data-engine-phase="forming"] { --engine-accent: var(--muted, #9aa694); }
+.wheel-engine[data-engine-result="true"] { --engine-accent: var(--lime, #ff8a3d); }
+.wheel-engine__header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; }
+.wheel-engine .wheel-engine__header h2 { margin: 0; font-size: 14px; font-weight: 650; letter-spacing: -.02em; }
+.wheel-engine__phase { color: var(--engine-accent); font-size: 11px; }
+.wheel-engine__phase::before { content: ""; display: inline-block; width: 5px; height: 5px; margin: 0 7px 2px 0; border-radius: 50%; background: currentColor; }
+.wheel-engine[data-engine-phase="contributing"] .wheel-engine__phase::before { animation: we-lamp 1.7s ease-in-out infinite; }
+@keyframes we-lamp { 50% { opacity: .3; transform: scale(.75); } }
+.wheel-engine__body { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 24px; padding-block: 22px; }
+@property --p { syntax: "<number>"; inherits: true; initial-value: 0; }
+.wheel-engine__mechanism {
+  --tilt-x: 0;
+  --tilt-y: 0;
+  --mx: 50%;
+  --my: 44%;
+  position: relative;
+  flex: 0 1 220px;
+  width: min(100%, 220px);
+  min-width: 0;
+  aspect-ratio: 1;
+  margin-inline: auto;
+  container-type: inline-size;
+  border-radius: 50%;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, .035), transparent 62%),
+    radial-gradient(circle at 50% 50%, #171922 0 58%, #121319 59% 72%, #1c1f29 73% 100%);
+  /* The plate leans toward the pointer; the cast shadow leans away. */
+  transform: perspective(900px) rotateX(calc(var(--tilt-y) * -9deg)) rotateY(calc(var(--tilt-x) * 11deg));
+  transition: transform .4s cubic-bezier(.2, .75, .15, 1);
+  will-change: transform;
+  box-shadow:
+    calc(var(--tilt-x) * -26px) calc(var(--tilt-y) * -26px + 16px) 34px -18px rgba(0, 0, 0, .9),
+    inset 0 2px 3px rgba(255, 255, 255, .06),
+    inset 0 -6px 14px rgba(0, 0, 0, .65),
+    0 12px 26px -14px #000;
+  outline: 1px solid #2c2f3d;
+  clip-path: circle(50%);
+}
+/* The illustrated chamber: one pre-rendered plate, turning almost imperceptibly.
+   It sits under the SVG gauge, so the gauge stays the source of truth. */
+.wheel-engine__mechanism::before {
+  content: "";
+  position: absolute;
+  inset: -14%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(9, 11, 8, .12) 0 28%, rgba(9, 11, 8, .5) 52%, rgba(9, 11, 8, .24) 70%, rgba(9, 11, 8, .92) 100%),
+    url("assets/studio/pot-chamber.jpg") center / cover no-repeat;
+  filter: brightness(.9) saturate(.92);
+  opacity: .82;
+  transform-origin: 50% 50%;
+  animation: we-chamber 52s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes we-chamber { from { transform: rotate(-2.2deg) scale(1.02); } to { transform: rotate(2.2deg) scale(1.06); } }
+.wheel-engine__mechanism::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at var(--mx) var(--my), rgba(255, 244, 224, .13), rgba(255, 244, 224, 0) 42%),
+    radial-gradient(circle at 50% 50%, rgba(255, 150, 60, calc(.05 + var(--p) * .26)), transparent 48%),
+    radial-gradient(circle at 50% 112%, rgba(255, 138, 61, .07), transparent 58%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.wheel-engine__mechanism.is-grabbing { cursor: grabbing; transition-duration: .08s; }
+.wheel-engine__rings { display: block; width: 100%; height: 100%; overflow: hidden; fill: none; }
+.wheel-engine__rim { stroke: #33374a; stroke-width: 1.5; }
+.wheel-engine__ticks { stroke: #7d8494; stroke-width: 4; opacity: .45; }
+.wheel-engine__track { stroke: #262935; stroke-width: 6; }
+.wheel-engine__charge { stroke: var(--engine-accent); stroke-width: 6; stroke-linecap: butt; filter: drop-shadow(0 0 4px rgba(255, 138, 61, .55)); transition: stroke-dasharray .9s cubic-bezier(.2, .75, .15, 1); }
+.wheel-engine__pins { fill: #7d8494; }
+/* A charged bead rides the rim while contributions are landing. */
+.we-comet { transform-origin: 120px 120px; animation: we-orbit 7s linear infinite; opacity: 0; transition: opacity .6s; }
+.we-comet circle { fill: var(--engine-accent); filter: drop-shadow(0 0 3px var(--engine-accent)); }
+.we-comet__halo { opacity: .28; animation: we-halo 1.9s ease-in-out infinite; }
+.wheel-engine[data-engine-phase="contributing"] .we-comet { opacity: .85; }
+.wheel-engine[data-engine-phase="forming"] .we-comet,
+.wheel-engine.is-locked .we-comet { opacity: 0; }
+@keyframes we-orbit { to { transform: rotate(360deg); } }
+@keyframes we-halo { 0%, 100% { opacity: .12; } 50% { opacity: .4; } }
+.we-gear { transform: rotate(var(--twist, 0deg)); transform-origin: 120px 120px; }
+/* The ring spins faster as more of the pot is funded: idle at 30s, tight at 10s. */
+.we-gear__spin { transform-origin: 120px 120px; animation: we-spin calc(30s - var(--p) * 20s) linear infinite; }
+.we-gear circle { stroke: #3a3e4e; stroke-width: 5; opacity: .75; }
+.we-gear__spin circle + circle { stroke: #2c303c; stroke-width: 2; opacity: .6; }
+@keyframes we-spin { to { transform: rotate(360deg); } }
+.we-iris { transform: rotate(calc(var(--p) * 68deg)); transform-origin: 120px 120px; transition: transform .9s cubic-bezier(.2, .75, .15, 1); }
+.we-iris__breathe { transform-origin: 120px 120px; animation: we-breathe 9s ease-in-out infinite; }
+@keyframes we-breathe { 0%, 100% { transform: rotate(-1.1deg); } 50% { transform: rotate(1.1deg); } }
+.we-blade { transform: rotate(var(--a)); transform-origin: 120px 120px; }
+.we-blade rect { transform: translateY(calc(var(--p) * 42px)); fill: #262a37; stroke: #464b5e; stroke-width: .75; transition: transform 1s cubic-bezier(.2, .75, .15, 1), fill .6s; }
+.wheel-engine[data-engine-phase="contributing"] .we-blade rect { fill: #2d2a29; stroke: #6a5040; }
+.wheel-engine[data-engine-result="true"] .we-blade rect,
+.wheel-engine[data-engine-phase="funded"] .we-blade rect { fill: #3a2b22; stroke: var(--engine-accent); }
+.we-pistons { opacity: .5; }
+.we-piston { transform: rotate(var(--a)); transform-origin: 120px 120px; }
+.we-piston rect { transform: translateY(calc(var(--p) * 30px)); fill: #3c4152; transition: transform 1s cubic-bezier(.2, .75, .15, 1); }
+/* Eight rams pump in sequence; the stroke quickens with the pressure reading. */
+.we-ram { transform-origin: 120px 120px; animation: we-pump calc(3.6s - var(--p) * 2.4s) ease-in-out infinite; animation-delay: calc(var(--i, 0) * -.3s); }
+@keyframes we-pump { 0%, 100% { transform: translateY(0); } 45% { transform: translateY(-4.5px); } }
+.we-membrane { stroke: rgba(255, 138, 61, .22); stroke-width: 1.5; stroke-dasharray: 3 4; transform: scale(calc(1 - var(--p) * .34)); transform-origin: 120px 120px; transition: transform 1s cubic-bezier(.2, .75, .15, 1); }
+.we-hub { transition: transform .9s cubic-bezier(.2, .75, .15, 1), box-shadow .5s, border-color .5s; transform: scale(calc(1 - var(--p) * .05)); }
+.wheel-engine.is-locked .we-hub { transform: scale(.94); box-shadow: 0 0 0 6px rgba(255, 138, 61, .06), inset 0 0 34px rgba(255, 138, 61, .12); }
+.we-screw { position: absolute; width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #6a6f80, #23252f 72%); box-shadow: inset 0 1px 1px rgba(255, 255, 255, .22), 0 1px 2px #000; }
+.we-screw::after { content: ""; position: absolute; inset: 2px 2.5px; background: linear-gradient(45deg, transparent 43%, #0b0c11 43% 57%, transparent 57%); transform: rotate(28deg); }
+.we-screw--tl { left: 12%; top: 12%; }
+.we-screw--tr { right: 12%; top: 12%; }
+.we-screw--bl { left: 12%; bottom: 12%; }
+.we-screw--br { right: 12%; bottom: 12%; }
+.we-engrave { position: absolute; left: 50%; bottom: 4.5%; transform: translateX(-50%); font: 600 6.5px/1 var(--mono, monospace); letter-spacing: .22em; color: #8d8577; text-shadow: 0 1px 0 #000; }
+.we-grip { position: absolute; right: 13%; bottom: 16%; font: 600 6px/1 var(--mono, monospace); letter-spacing: .14em; color: var(--engine-accent); opacity: 0; transition: opacity .25s; }
+.wheel-engine__mechanism:hover .we-grip, .wheel-engine__mechanism:focus-visible .we-grip { opacity: .7; }
+.wheel-engine.is-locked .we-gear__spin { animation-duration: 90s; }
+.wheel-engine.is-locked .we-ram,
+.wheel-engine.is-locked .we-iris__breathe,
+.wheel-engine.is-locked .wheel-engine__hub::before { animation-play-state: paused; }
+.wheel-engine.is-locked .we-membrane { stroke: rgba(255, 138, 61, .5); }
+.wheel-engine__hub {
+  position: absolute;
+  inset: 21.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.6cqi;
+  padding: 6cqi 5cqi;
+  border: 1px solid #3b3f52;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 28%, #262a38, #14161e 62%, #0b0c11 100%);
+  box-shadow: inset 0 2px 6px rgba(255, 255, 255, .06), inset 0 -10px 18px rgba(0, 0, 0, .7), 0 6px 16px -8px #000;
+  text-align: center;
+}
+.wheel-engine__hub > span { color: var(--muted, #9aa694); font-size: clamp(6.5px, 3.4cqi, 8px); text-transform: uppercase; letter-spacing: .06em; line-height: 1.3; }
+.wheel-engine__hub small { display: block; max-width: 100%; color: var(--muted, #9aa694); font-size: clamp(8px, 4.4cqi, 10px); line-height: 1.35; font-variant-numeric: tabular-nums; }
+.wheel-engine__percent { color: var(--engine-accent); font: 500 clamp(20px, 14.5cqi, 34px)/1.1 var(--mono, monospace); letter-spacing: -.07em; }
+.wheel-engine__percent span { margin-left: 2px; font-size: clamp(10px, 6.2cqi, 15px); letter-spacing: 0; }
+.wheel-engine__name { display: -webkit-box; max-width: 100%; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; font-size: 15px; line-height: 1.15; letter-spacing: -.03em; }
+.wheel-engine__lock { flex: none; width: 15px; height: 15px; fill: none; stroke: var(--engine-accent); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.wheel-engine__hub::before { content: ""; position: absolute; inset: -7px; border-radius: 50%; border: 1px solid var(--engine-accent); opacity: 0; pointer-events: none; }
+.wheel-engine[data-engine-phase="contributing"] .wheel-engine__hub::before { animation: we-hub-pulse 3.2s ease-out infinite; }
+@keyframes we-hub-pulse { 0% { opacity: .45; transform: scale(.98); } 70%, 100% { opacity: 0; transform: scale(1.07); } }
+.wheel-engine[data-engine-result="true"] .wheel-engine__hub { border-color: var(--engine-accent); box-shadow: 0 0 0 5px rgba(255, 138, 61, .035), inset 0 0 28px rgba(255, 138, 61, .06); }
+.wheel-engine[data-engine-result="true"] .wheel-engine__hub small { color: var(--bone, #eef1e6); }
+.wheel-engine__context { flex: 1 1 190px; min-width: 0; }
+.wheel-engine__metrics { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; }
+.wheel-engine__metrics dt { color: var(--muted, #9aa694); font-size: 10px; }
+.wheel-engine__metrics dd { margin: 4px 0 0; font: 500 15px/1.4 var(--mono, monospace); font-variant-numeric: tabular-nums; }
+.wheel-engine__meter { height: 3px; margin-block: 14px 18px; overflow: hidden; border-radius: 2px; background: var(--line, #293026); }
+.wheel-engine__meter > span { display: block; height: 100%; background: var(--engine-accent); }
+.wheel-engine .wheel-engine__pot { display: flex; align-items: baseline; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; margin: 0 0 12px; }
+.wheel-engine__pot > span { color: var(--muted, #9aa694); font-size: 11px; }
+.wheel-engine__pot strong { font: 500 15px/1.5 var(--mono, monospace); font-variant-numeric: tabular-nums; }
+.wheel-engine .wheel-engine__readout { margin: 0; color: var(--bone, #eef1e6); font-size: 12px; line-height: 1.7; }
+.wheel-engine .wheel-engine__readout.is-typing::after {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 1em;
+  margin-left: 3px;
+  vertical-align: -2px;
+  background: var(--engine-accent);
+  animation: wheel-engine-caret 700ms steps(1, end) infinite;
+}
+@keyframes wheel-engine-caret { 50% { opacity: 0; } }
+.wheel-engine .wheel-engine__note { margin: 10px 0 0; color: var(--muted, #9aa694); font-size: 11px; line-height: 1.6; }
+.wheel-engine__settings { border-top: 1px solid var(--line, #293026); }
+.wheel-engine__settings > summary { min-height: 44px; padding-block: 13px; color: var(--bone, #eef1e6); cursor: pointer; font-size: 12px; }
+.wheel-engine__settings > summary::marker { color: var(--muted, #9aa694); }
+.wheel-engine__settings > summary span { display: inline-block; margin-left: 10px; color: var(--muted, #9aa694); font-size: 10px; }
+.wheel-engine__settings-body { display: grid; gap: 12px; padding-block: 0 12px; }
+.wheel-engine .wheel-engine__check { display: flex; align-items: center; gap: 10px; min-height: 44px; margin: 0; cursor: pointer; font-size: 12px; }
+.wheel-engine__check input { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--lime, #ff8a3d); }
+.wheel-engine__selects { display: flex; flex-wrap: wrap; gap: 12px; }
+.wheel-engine__selects > label { display: grid; flex: 1 1 165px; gap: 6px; min-width: 0; font-size: 11px; color: var(--muted, #9aa694); }
+.wheel-engine__selects select { width: 100%; min-width: 0; min-height: 44px; padding: 9px 10px; border: 1px solid var(--line, #293026); border-radius: 6px; background: var(--bg, #0b0d0a); color: var(--bone, #eef1e6); font: inherit; text-overflow: ellipsis; }
+.wheel-engine__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.wheel-engine__actions button { min-height: 44px; padding: 10px 14px; border: 1px solid var(--line, #293026); border-radius: 6px; background: var(--bg, #0b0d0a); color: var(--bone, #eef1e6); font: inherit; font-size: 12px; line-height: 1.5; cursor: pointer; white-space: normal; }
+.wheel-engine__actions [data-engine-action="announce"] { border-color: var(--cyan, #61e7f2); color: var(--cyan, #61e7f2); }
+.wheel-engine :is(button, select, input):disabled { cursor: not-allowed; opacity: .5; }
+.wheel-engine :is(button, select, input, summary):focus-visible { outline: 2px solid var(--lime, #ff8a3d); outline-offset: 4px; }
+.wheel-engine .wheel-engine__status { min-height: 1.6em; margin: 8px 0 0; color: var(--muted, #9aa694); font-size: 11px; line-height: 1.6; }
+@media (hover: hover) {
+  .wheel-engine__settings > summary:hover { color: var(--cyan, #61e7f2); }
+  .wheel-engine__actions button:not(:disabled):hover { border-color: var(--bone, #eef1e6); color: var(--bone, #eef1e6); }
+}
+
+/* No animation runs before mount has applied the saved pause preference. The
+   funding arc is never rotated; only the decorative inner cog engages once. */
+.wheel-engine[data-engine-mounted="true"][data-engine-result="true"] .wheel-engine__hub {
+  animation: wheel-engine-lock var(--engine-duration) var(--ease, ease-out) 1 both;
+}
+.wheel-engine[data-engine-paused="true"] :is(.wheel-engine__hub, .we-gear__spin, .we-ram, .we-iris__breathe, .we-comet) { animation-play-state: paused; }
+.wheel-engine[data-engine-paused="true"] .wheel-engine__mechanism::before,
+.wheel-engine[data-engine-paused="true"] .wheel-engine__hub::before,
+.wheel-engine[data-engine-paused="true"] .wheel-engine__phase::before { animation-play-state: paused; }
+@keyframes wheel-engine-lock { from { box-shadow: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .wheel-engine *, .wheel-engine *::before, .wheel-engine *::after { animation: none !important; transition: none !important; }
+}
+@media (max-width: 360px) {
+  .wheel-engine { padding: 14px; }
+  .wheel-engine__body { gap: 18px; }
+  .wheel-engine__settings > summary span { display: block; margin: 4px 0 0 15px; }
+}
+@media (forced-colors: active) {
+  .wheel-engine__charge, .wheel-engine__lock { stroke: Highlight; }
+  .wheel-engine__meter > span { background: Highlight; forced-color-adjust: none; }
+  .wheel-engine[data-engine-result="true"] .wheel-engine__hub { border-color: Highlight; }
+}

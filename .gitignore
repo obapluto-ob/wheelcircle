@@ -1,0 +1,13 @@
+# Server-only provider credentials. Never commit this file.
+dev/paysasa.local.env
+
+# Local databases and logs
+dev/*.db
+dev/*.db-shm
+dev/*.db-wal
+*.log
+
+# Generated test screenshots
+/dev/*.png
+dev/*.local.env
+dev/wheel.db*

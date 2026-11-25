@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="THE WHEEL">
+  <defs>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffb07a"/>
+      <stop offset=".45" stop-color="#ff8a3d"/>
+      <stop offset="1" stop-color="#a94a12"/>
+    </linearGradient>
+    <linearGradient id="bezel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a3c4c"/>
+      <stop offset="1" stop-color="#15161d"/>
+    </linearGradient>
+    <radialGradient id="hub" cx=".38" cy=".3" r=".9">
+      <stop offset="0" stop-color="#5a5e70"/>
+      <stop offset=".6" stop-color="#23252f"/>
+      <stop offset="1" stop-color="#0d0e13"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="#0b0c11"/>
+  <rect x="14" y="14" width="484" height="484" rx="104" fill="none" stroke="url(#bezel)" stroke-width="6"/>
+  <circle cx="256" cy="256" r="172" fill="none" stroke="#1c1e27" stroke-width="26"/>
+  <circle cx="256" cy="256" r="158" fill="none" stroke="url(#rim)" stroke-width="13"/>
+  <g stroke="#ff8a3d" stroke-width="9" stroke-linecap="round" opacity=".85">
+    <path d="M256 106v40M256 366v40M106 256h40M366 256h40"/>
+    <path d="M150 150l28 28M334 334l28 28M362 150l-28 28M178 334l-28 28"/>
+  </g>
+  <g stroke="#ffd2b3" stroke-width="2.4" stroke-linecap="round" opacity=".38">
+    <path d="M256 128v14M256 370v14M128 256h14M370 256h14"/>
+  </g>
+  <circle cx="256" cy="256" r="66" fill="url(#hub)" stroke="#3b3d4d" stroke-width="5"/>
+  <circle cx="256" cy="256" r="26" fill="#0b0c11" stroke="#ff8a3d" stroke-width="6"/>
+  <circle cx="256" cy="256" r="8" fill="#ff8a3d"/>
+  <path d="M394 84l12 30 30 12-30 12-12 30-12-30-30-12 30-12z" fill="#6f7bff"/>
+  <circle cx="394" cy="126" r="5" fill="#ffd166"/>
+  <circle cx="88" cy="416" r="5" fill="#6f7bff" opacity=".8"/>
+</svg>

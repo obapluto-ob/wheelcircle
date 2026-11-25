@@ -1,0 +1,16 @@
+{
+  "name": "wheelcircle",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "THE WHEEL — a fixed-contribution circle where the pot is funded first, the discount is bid blind, and every payout is earned.",
+  "scripts": {
+    "dev": "node dev/server.mjs",
+    "dev:live": "node --use-system-ca dev/server.mjs --live",
+    "tunnel": "cloudflared tunnel --url http://localhost:8099",
+    "build": "node dev/build.mjs",
+    "test:practice-ui": "node dev/practice-check.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check functions/routes.mjs && node --check dev/server.mjs && node --check dev/memory-db.mjs"
+  }
+}

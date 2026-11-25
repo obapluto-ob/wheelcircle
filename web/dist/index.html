@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0c11">
+  <meta name="description" content="THE WHEEL is a private savings circle. Everyone puts in the same amount, each seat carries a posted price, and the seat is paid the moment the pot is whole.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://localhost:8099 http://127.0.0.1:8099; font-src 'self'; base-uri 'none'; form-action 'self';">
+  <title>THE WHEEL — The circle that pays itself</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-1024.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="THE WHEEL">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="practice.css">
+  <link rel="stylesheet" href="v2.css">
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="engine.css">
+  <link rel="stylesheet" href="open-circle.css">
+  <link rel="stylesheet" href="mech.css">
+  <link rel="stylesheet" href="studio.css">
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-wheel" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.1"/><circle cx="12" cy="12" r="6.1" opacity=".55"/><circle cx="12" cy="12" r="2.1"/><path d="M12 2.9v3.2M12 17.9v3.2M2.9 12h3.2M17.9 12h3.2M5.6 5.6l2.3 2.3M16.1 16.1l2.3 2.3M18.4 5.6l-2.3 2.3M7.9 16.1l-2.3 2.3"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="10" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10M12 14v2.5"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3.8 19.5c.5-3.4 2.4-5.2 5.2-5.2s4.7 1.8 5.2 5.2M16.5 5.5a2.8 2.8 0 0 1 0 5.4M17 14.4c2.1.3 3.4 2 3.8 4.8"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6.5A2.5 2.5 0 0 1 4 17.5z"/><path d="M4 8h16M15.5 12h4.5v4h-4.5a2 2 0 0 1 0-4z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 3.6 19.5h16.8z"/><path d="M12 9v4.5M12 16.8v.2"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="11" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M7.3 4h2.1l1.5 4-2.1 1.4a14 14 0 0 0 5.8 5.8l1.4-2.1 4 1.5v2.1a2.5 2.5 0 0 1-2.7 2.5C10.9 19 5 13.1 4.8 6.7A2.5 2.5 0 0 1 7.3 4z"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M9 21h6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.5 19 6v5.2c0 4.4-2.8 7.4-7 9.3-4.2-1.9-7-4.9-7-9.3V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="12" r="3.5"/><path d="M11.5 12H21M17 12v3M14 12v2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="15" rx="2.5"/><path d="M4 9.5h16M8 3.5v4M16 3.5v4"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 5 13h6l-1 9 8-11h-6z"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24"><path d="M4 17l5.5-5.5 3.5 3.5L20 8"/><path d="M15 8h5v5"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M10 5H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h4M14 8l4 4-4 4M9 12h9"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3.5v2M12 18.5v2M4.5 7.5l1.7 1M17.8 15.5l1.7 1M4.5 16.5l1.7-1M17.8 8.5l1.7-1"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20h-5v-5H9v5H4z"/></symbol>
+    <symbol id="i-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v2M12 14.5v2M7.5 12h2M14.5 12h2"/></symbol>
+    <symbol id="i-ledger" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4.5"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 20c.4-4 2.6-6 6.5-6s6.1 2 6.5 6"/></symbol>
+    <symbol id="i-spin" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 11.5 12 16l4.5-4.5M5 20h14"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="18" cy="18" r="2.2"/><path d="M8 11l8-4M8 13l8 4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M6 21V4M6 4h11l-2 4 2 4H6"/></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8.5h13M13.5 5 17 8.5 13.5 12M20 15.5H7M10.5 12 7 15.5 10.5 19"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.8 2.5 5.1 5.6.8-4 4 1 5.6-5.1-2.7-5.1 2.7 1-5.6-4-4 5.6-.8z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-sound-on" viewBox="0 0 24 24"><path d="M4 10v4h3.5L12 18V6L7.5 10z"/><path d="M15.5 9.2a4 4 0 0 1 0 5.6M18 6.8a7.5 7.5 0 0 1 0 10.4"/></symbol>
+    <symbol id="i-sound-off" viewBox="0 0 24 24"><path d="M4 10v4h3.5L12 18V6L7.5 10z"/><path d="M16 9.5 20 14.5M20 9.5 16 14.5"/></symbol>
+    <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5.5"/><circle cx="12" cy="17" r="1.3"/></symbol>
+  </svg>
+
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="boot" id="boot" aria-live="polite">
+    <span class="boot__wheel"><svg class="i"><use href="#i-wheel"></use></svg></span>
+    <span>Opening the wheel…</span>
+  </div>
+
+  <div class="lobby" id="lobbyView" hidden>
+    <header class="topbar">
+      <a class="brand" href="#/" aria-label="THE WHEEL home">
+        <span class="brand__mark"><svg class="i"><use href="#i-wheel"></use></svg></span>
+        <span class="brand__type">THE WHEEL<em>GROUP SAVINGS ENGINE</em></span>
+      </a>
+      <nav class="topnav" aria-label="Product">
+        <a href="#how">How it works</a>
+        <a href="#rules">Rulebook</a>
+        <a href="#/practice">Practice</a>
+      </nav>
+      <div class="topactions">
+        <button class="btn btn--quiet" type="button" data-action="open-auth" data-mode="start">Sign in</button>
+        <button class="btn btn--lime" type="button" data-action="open-auth" data-mode="register">Create account <svg class="i"><use href="#i-arrow"></use></svg></button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="hero__copy">
+          <p class="eyebrow"><span class="live-dot"></span> A private savings circle · KES</p>
+          <h1>The circle<br>that pays<br><span class="lime">itself.</span></h1>
+          <p class="lede">Everyone puts in the same amount. The whole pot is auctioned by a sealed discount. The winner takes it now. The seats that wait are paid instantly. No selling. No borrowing. No external capital.</p>
+          <div class="hero__actions">
+            <button class="btn btn--lime btn--lg" type="button" data-action="open-auth" data-mode="register">Start a circle <svg class="i"><use href="#i-arrow"></use></svg></button>
+            <button class="btn btn--line btn--lg" type="button" data-action="join-code">Join with a code</button>
+            <a class="btn btn--quiet" href="#/open">Find an open circle <svg class="i"><use href="#i-users"></use></svg></a>
+            <a class="btn btn--quiet" href="#/practice">Try with virtual money <svg class="i"><use href="#i-arrow"></use></svg></a>
+          </div>
+          <div class="hero__trust">
+            <span><svg class="i"><use href="#i-lock"></use></svg> Passkey accounts</span>
+            <span><svg class="i"><use href="#i-shield"></use></svg> Funded before the wheel turns</span>
+            <span><svg class="i"><use href="#i-bolt"></use></svg> Instant payouts to patient seats</span>
+          </div>
+        </div>
+
+        <div class="hero__visual" aria-label="Illustration of the wheel mechanic">
+          <div class="arena" aria-hidden="true">
+            <div class="arena__floor"></div>
+            <span class="arena__spark arena__spark--1"></span>
+            <span class="arena__spark arena__spark--2"></span>
+            <span class="arena__spark arena__spark--3"></span>
+            <span class="arena__spark arena__spark--4"></span>
+          </div>
+          <div class="wheel-stage" id="lobbyStage">
+            <div class="wheel-stage__halo"></div>
+            <div class="wheel-stage__chamber" aria-hidden="true"></div>
+            <div class="wheel-stage__base"></div>
+            <div class="wheel3d">
+              <div class="wheel3d__rail wheel3d__rail--outer"></div>
+              <div class="wheel3d__rail wheel3d__rail--inner"></div>
+              <div class="wheel3d__disc" id="lobbyWheel">
+                <div class="wheel3d__plate" aria-hidden="true"></div>
+                <div class="wheel3d__face" id="lobbyFace">
+                  <span class="wheel3d__seg wheel3d__seg--1"></span>
+                  <span class="wheel3d__seg wheel3d__seg--2"></span>
+                  <span class="wheel3d__seg wheel3d__seg--3"></span>
+                  <span class="wheel3d__seg wheel3d__seg--4"></span>
+                  <span class="wheel3d__seg wheel3d__seg--5"></span>
+                  <span class="wheel3d__seg wheel3d__seg--6"></span>
+                  <span class="wheel3d__tick wheel3d__tick--1"></span>
+                  <span class="wheel3d__tick wheel3d__tick--2"></span>
+                  <span class="wheel3d__tick wheel3d__tick--3"></span>
+                  <span class="wheel3d__tick wheel3d__tick--4"></span>
+                  <span class="wheel3d__tick wheel3d__tick--5"></span>
+                  <span class="wheel3d__tick wheel3d__tick--6"></span>
+                </div>
+              </div>
+              <div class="wheel-orbit" id="lobbyOrbit" style="--orbit-dur:54s" aria-hidden="true">
+                <span class="wheel-orbit__seat" style="--a:0deg" data-label="1"></span>
+                <span class="wheel-orbit__seat" style="--a:60deg" data-label="2"></span>
+                <span class="wheel-orbit__seat" style="--a:120deg" data-label="3"></span>
+                <span class="wheel-orbit__seat" style="--a:180deg" data-label="4"></span>
+                <span class="wheel-orbit__seat" style="--a:240deg" data-label="5"></span>
+                <span class="wheel-orbit__seat" style="--a:300deg" data-label="6"></span>
+              </div>
+              <div class="wheel3d__pointer"></div>
+            </div>
+            <div class="wheel-hub">
+              <svg class="wheel-hub__mark" aria-hidden="true"><use href="#i-wheel"></use></svg>
+              <span class="wheel-hub__label">THE POT</span>
+              <strong id="hubPot">KES 12,000</strong>
+              <span class="wheel-hub__meta" id="hubMeta">6 members · KES 2,000 each</span>
+              <i class="wheel-hub__pulse"></i>
+            </div>
+            <div class="float-card float-card--bid">
+              <span class="float-card__k">SEALED BID</span>
+              <b id="floatBid">8.5%</b>
+              <span class="float-card__meter" aria-hidden="true"><i id="floatBidBar" style="--w:31%"></i></span>
+              <span>highest discount wins</span>
+            </div>
+            <div class="float-card float-card--wait">
+              <span class="float-card__k">PATIENT SEATS PAID</span>
+              <b><span id="floatShare">+KES 204</span> <em>each</em></b>
+              <span>instantly, this turn</span>
+            </div>
+            <div class="float-card float-card--safe">
+              <span class="float-card__k">FUNDED POT</span>
+              <b><svg class="i"><use href="#i-check"></use></svg> <span id="floatPot">KES 12,000</span></b>
+              <span>whole before the auction opens</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker__track">
+          <span>5–12 MEMBERS</span><i></i><span>KES 200–5,000 CONTRIBUTION</span><i></i><span>SEALED DISCOUNT BIDS</span><i></i><span>1% PLATFORM FEE</span><i></i><span>1% GUARANTEE FUND</span><i></i><span>25% MAX DISCOUNT</span><i></i><span>48H FIRST-PAYOUT HOLD</span><i></i>
+          <span>5–12 MEMBERS</span><i></i><span>KES 200–5,000 CONTRIBUTION</span><i></i><span>SEALED DISCOUNT BIDS</span><i></i><span>1% PLATFORM FEE</span><i></i><span>1% GUARANTEE FUND</span><i></i><span>25% MAX DISCOUNT</span><i></i><span>48H FIRST-PAYOUT HOLD</span><i></i>
+        </div>
+      </div>
+
+      <section class="section how" id="how">
+        <div class="section__head">
+          <p class="eyebrow">Guided turn</p>
+          <h2>Set it up.<br>Watch the money move.</h2>
+          <p class="section__lede">Three moves, no guesswork. Adjust a real circle and see exactly what every seat gets before anyone commits.</p>
+        </div>
+        <div class="guide" id="lobbyGuide">
+          <ol class="guide__rail" role="tablist" aria-label="Guided turn steps">
+            <li><button class="guide__tab is-on" type="button" role="tab" aria-selected="true" data-guide-step="0"><span>01</span><b>Your circle</b><em>Seats &amp; contribution</em></button></li>
+            <li><button class="guide__tab" type="button" role="tab" aria-selected="false" data-guide-step="1"><span>02</span><b>The auction</b><em>Sealed discount bid</em></button></li>
+            <li><button class="guide__tab" type="button" role="tab" aria-selected="false" data-guide-step="2"><span>03</span><b>Settlement</b><em>Every shilling accounted</em></button></li>
+          </ol>
+          <div class="guide__panels">
+            <div class="guide__panel is-on" data-guide-panel="0">
+              <p class="guide__q">How many seats, and what does everyone put in each turn?</p>
+              <div class="guide__control">
+                <span class="guide__label">SEATS IN THE CIRCLE</span>
+                <div class="stepper">
+                  <button type="button" data-guide-seats="-1" aria-label="One fewer seat">−</button>
+                  <output id="guideSeats" aria-live="polite">6</output>
+                  <button type="button" data-guide-seats="1" aria-label="One more seat">+</button>
+                  <em>5–12 members</em>
+                </div>
+              </div>
+              <div class="guide__control">
+                <span class="guide__label">CONTRIBUTION PER TURN</span>
+                <div class="chips" data-guide-contrib>
+                  <button type="button" data-contrib="500">KES 500</button>
+                  <button type="button" data-contrib="1000">KES 1,000</button>
+                  <button type="button" class="is-on" data-contrib="2000">KES 2,000</button>
+                  <button type="button" data-contrib="5000">KES 5,000</button>
+                </div>
+              </div>
+              <div class="guide__out">
+                <span>THE POT EVERY TURN</span>
+                <b id="guidePot">KES 12,000</b>
+                <em id="guidePotMeta">6 seats × KES 2,000</em>
+              </div>
+            </div>
+            <div class="guide__panel" data-guide-panel="1" hidden>
+              <p class="guide__q">You want the pot early. What discount are you willing to pay the seats that wait?</p>
+              <div class="guide__control">
+                <span class="guide__label">YOUR SEALED BID</span>
+                <div class="bid">
+                  <input id="guideBid" type="range" min="1" max="25" step="0.5" value="8.5" aria-label="Discount bid percent">
+                  <output id="guideBidOut">8.5%</output>
+                </div>
+                <em class="hint">1%–25% of the pot · highest bid wins · ties go to the earliest bid</em>
+              </div>
+              <div class="guide__duo">
+                <div class="guide__out">
+                  <span>IF YOU WIN NOW</span>
+                  <b id="guideTakeNow">KES 10,530</b>
+                  <em id="guideTakeNowMeta">pot minus your discount, before the bond</em>
+                </div>
+                <div class="guide__out">
+                  <span>EACH SEAT THAT WAITS GETS</span>
+                  <b id="guideShare">KES 204</b>
+                  <em id="guideShareMeta">your discount split across 5 seats</em>
+                </div>
+              </div>
+            </div>
+            <div class="guide__panel" data-guide-panel="2" hidden>
+              <p class="guide__q">The turn settles in one move. Here is where every shilling lands.</p>
+              <div class="receipt" id="guideReceipt">
+                <div class="receipt__row"><span>Pot captured from <b id="rcSeats">6</b> seats</span><b class="lime" id="rcPot">KES 12,000</b></div>
+                <div class="receipt__row"><span>Winning discount <em id="rcBid">8.5%</em></span><b id="rcDiscount">− KES 1,020</b></div>
+                <div class="receipt__row receipt__row--sub"><span>Patience share · <em id="rcWaiters">5</em> seats</span><b class="cyan" id="rcShare">+ KES 204 each</b></div>
+                <div class="receipt__row"><span>Platform fee · 1%</span><b id="rcPlatform">− KES 120</b></div>
+                <div class="receipt__row"><span>Organizer fee · 1%</span><b id="rcOrganizer">− KES 120</b></div>
+                <div class="receipt__row"><span>Guarantee fund · 1%</span><b id="rcFund">− KES 120</b></div>
+                <div class="receipt__row"><span>Bond held · 20% <em>returned</em></span><b class="amber" id="rcBond">− KES 2,400</b></div>
+                <div class="receipt__row receipt__row--total"><span>Winner takes now</span><b class="lime" id="rcNet">KES 8,220</b></div>
+              </div>
+              <p class="receipt__foot" id="rcFoot">The bond returns as the winner pays their remaining turns. Patience shares are spendable immediately.</p>
+              <div class="guide__cta">
+                <button class="btn btn--lime" type="button" data-action="open-auth" data-mode="register">Start this circle <svg class="i"><use href="#i-arrow"></use></svg></button>
+                <span>Fees never stack on top of a contribution. They are taken from the pot itself.</span>
+              </div>
+            </div>
+          </div>
+          <div class="guide__foot">
+            <button class="btn btn--quiet" type="button" data-guide-dir="-1" hidden>Back</button>
+            <div class="guide__dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i></div>
+            <button class="btn btn--line" type="button" data-guide-dir="1">Next: the auction <svg class="i"><use href="#i-arrow"></use></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section why" id="why">
+        <div class="why__copy">
+          <p class="eyebrow">Why it holds</p>
+          <h2>No answer key.<br>No inventory.<br>No free money.</h2>
+          <p class="section__lede">The Wheel is not a quiz, a marketplace, or a loan. It is a settlement engine for a real savings circle. The money to pay the winner comes from the members' own contributions — captured before the auction opens.</p>
+          <ul class="checklist">
+            <li><svg class="i"><use href="#i-check"></use></svg><span><b>Cheat-resistant by construction.</b> A discount bid makes walking away expensive. The bond, guarantor, and fund are all on the hook.</span></li>
+            <li><svg class="i"><use href="#i-check"></use></svg><span><b>No external capital.</b> The pot is funded by the circle. The platform earns 1% of each settled pot, not from a sponsor.</span></li>
+            <li><svg class="i"><use href="#i-check"></use></svg><span><b>Instant and legible.</b> Every movement is a ledger entry. The settlement receipt shows the pot, the discount, the fees, the bond, and every patience share.</span></li>
+          </ul>
+        </div>
+        <div class="why__panel">
+          <div class="waterfall">
+            <div class="waterfall__head"><span>SETTLEMENT WATERFALL</span><b id="wfHead">6 SEATS · ONE TURN</b></div>
+            <div class="waterfall__row"><span>Pot captured</span><b class="lime" id="wfPot">KES 12,000</b></div>
+            <div class="waterfall__row"><span>Winning discount · <em id="wfBid">8.5%</em></span><b id="wfDiscount">− KES 1,020</b></div>
+            <div class="waterfall__row waterfall__row--sub"><span>Patience share · <em id="wfWaiters">5</em> seats</span><b class="cyan" id="wfShare">+ KES 204 each</b></div>
+            <div class="waterfall__row"><span>Platform · 1%</span><b id="wfPlatform">− KES 120</b></div>
+            <div class="waterfall__row"><span>Organizer · 1%</span><b id="wfOrganizer">− KES 120</b></div>
+            <div class="waterfall__row"><span>Guarantee fund · 1%</span><b id="wfFund">− KES 120</b></div>
+            <div class="waterfall__row"><span>Bond hold · 20%</span><b class="amber" id="wfBond">− KES 2,400</b></div>
+            <div class="waterfall__row waterfall__row--total"><span>Winner net</span><b class="lime" id="wfNet">KES 8,220</b></div>
+            <p class="waterfall__foot">This panel follows the circle you build above — change the seats, the contribution or the bid and the waterfall recalculates with the same rules the backend settles with.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section rules" id="rules">
+        <div class="section__head section__head--split">
+          <div>
+            <p class="eyebrow">Rulebook · v0.1</p>
+            <h2>Short rules.<br>Hard edges.</h2>
+          </div>
+          <p class="section__lede">The circle votes with its feet. These are the defaults every member accepts before joining. The organizer can narrow them, never widen them.</p>
+        </div>
+        <div class="rules__grid">
+          <details class="rule" open>
+            <summary><span>01</span> The pot is whole before it moves</summary>
+            <p>Every active member must fund the turn. If someone misses the window, the organizer resolves the shortfall from the fund, the guarantor, or their own wallet. The auction cannot open on a partial pot.</p>
+          </details>
+          <details class="rule">
+            <summary><span>02</span> Sealed discount, highest wins</summary>
+            <p>Bids are sealed and cannot be edited. The discount is between 1% (or KES 50, whichever is greater) and 25% of the pot. A tie goes to the earliest bid. No bids means a random eligible member wins at 0%.</p>
+          </details>
+          <details class="rule">
+            <summary><span>03</span> The last turn has no auction</summary>
+            <p>When one member is left without a payout, they take the whole pot at 0% discount and no bond. The circle closes after that turn.</p>
+          </details>
+          <details class="rule">
+            <summary><span>04</span> Bond, guarantor, fund</summary>
+            <p>New members hold a 25% bond, falling to 20%, 15%, and 10% with a clean history. A member can have one guarantor; a member can guarantee up to two others. The fund earns 1% of every pot plus late fees and forfeited bonds.</p>
+          </details>
+          <details class="rule">
+            <summary><span>05</span> Fees are visible</summary>
+            <p>Platform 1%. Organizer 0–1.5%, chosen at creation. Guarantee fund 1%. Late fee 2% with a 10% cap after a 24-hour grace. If the organizer wins, the organizer fee goes to the fund.</p>
+          </details>
+          <details class="rule">
+            <summary><span>06</span> Identity before money out</summary>
+            <p>The organizer verifies each member's phone and identity in person before the first payout. The first payout is held for 48 hours. Later payouts settle immediately.</p>
+          </details>
+        </div>
+        <p class="rules__note"><svg class="i"><use href="#i-alert"></use></svg> THE WHEEL is a record-keeping and settlement service for private savings circles. It is not a bank, lender, or deposit-taking institution. Member funds are held only for settlement in the circle.</p>
+      </section>
+
+      <section class="closing">
+        <div class="closing__in">
+          <div>
+            <p class="eyebrow">Your circle, your rules</p>
+            <h2>Bring five people.<br>Turn the wheel.</h2>
+          </div>
+          <div class="closing__actions">
+            <button class="btn btn--lime btn--lg" type="button" data-action="open-auth" data-mode="register">Create your account <svg class="i"><use href="#i-arrow"></use></svg></button>
+            <button class="btn btn--line btn--lg" type="button" data-action="join-code">I have an invite code</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__brand">
+        <span class="brand__mark"><svg class="i"><use href="#i-wheel"></use></svg></span>
+        <div><b>THE WHEEL</b><span>Group savings engine · KES · East Africa Time</span></div>
+      </div>
+      <p class="footer__legal">THE WHEEL is a record-keeping and settlement service for private savings circles. It is not a bank, lender, or deposit-taking institution. Member funds are held only for settlement in the circle. Read the rulebook before joining. Disputes are resolved by the circle organizer under the platform rules.</p>
+      <div class="footer__links"><a href="#rules">Rulebook</a><a href="#why">How settlement works</a><a href="#how">Getting started</a><a href="#/practice">Practice mode</a><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a></div>
+    </footer>
+  </div>
+
+  <div class="practice-shell" id="practiceView" hidden></div>
+
+  <div class="app-shell" id="appView" hidden>
+    <aside class="rail">
+      <a class="brand brand--rail" href="#/app" aria-label="THE WHEEL overview">
+        <span class="brand__mark"><svg class="i"><use href="#i-wheel"></use></svg></span>
+        <span class="brand__type">THE WHEEL<em id="railGroup">NO CIRCLE YET</em></span>
+      </a>
+      <nav class="rail__nav" aria-label="Workspace">
+        <a href="#/app" data-nav="dashboard"><svg class="i"><use href="#i-home"></use></svg><span>Overview</span></a>
+        <a href="#/open" data-nav="open"><svg class="i"><use href="#i-users"></use></svg><span>Open circles</span><em class="nav-live" id="navOpen" hidden>NEW</em></a>
+        <a href="#/g" data-nav="circle"><svg class="i"><use href="#i-circle"></use></svg><span>Circle</span></a>
+        <a href="#/g/auction" data-nav="auction"><svg class="i"><use href="#i-spin"></use></svg><span>Turn</span><em class="nav-live" id="navLive" hidden>LIVE</em></a>
+        <a href="#/g/ledger" data-nav="ledger"><svg class="i"><use href="#i-ledger"></use></svg><span>Ledger</span></a>
+        <a href="#/g/members" data-nav="members"><svg class="i"><use href="#i-users"></use></svg><span>Members</span></a>
+        <a href="#/practice"><svg class="i"><use href="#i-wheel"></use></svg><span>Practice mode</span></a>
+        <button class="latch" type="button" id="adminLatch" data-nav="admin" hidden aria-label="Hold to open the operator console">
+          <span class="latch__arc" aria-hidden="true"></span>
+          <span class="latch__copy">Operator door<small>Hold to open the review console</small></span>
+        </button>
+      </nav>
+      <div class="rail__spacer"></div>
+      <div class="rail__foot">
+        <button class="sound-toggle" type="button" data-action="toggle-sound" aria-pressed="false" aria-label="Turn machine sound on">
+          <span class="sound-toggle__slot" aria-hidden="true"></span>
+          <svg class="i" data-sound-icon><use href="#i-sound-on"></use></svg>
+          <span data-sound-label>Sound on</span>
+        </button>
+        <a class="rail__account" href="#/settings">
+          <span class="avatar" id="railAvatar">A</span>
+          <span class="rail__account-copy"><b id="railName">Account</b><em>Passkey secured</em></span>
+          <svg class="i"><use href="#i-settings"></use></svg>
+        </a>
+        <button class="rail__signout" type="button" data-action="sign-out"><svg class="i"><use href="#i-logout"></use></svg> Sign out</button>
+      </div>
+    </aside>
+
+    <header class="mobilebar">
+      <a class="brand" href="#/app" aria-label="THE WHEEL overview">
+        <span class="brand__mark"><svg class="i"><use href="#i-wheel"></use></svg></span>
+        <span class="brand__type">THE WHEEL</span>
+      </a>
+      <div class="mobilebar__actions">
+        <a class="practice-entry" href="#/practice">Practice</a>
+        <button class="wallet-chip" type="button" data-action="open-wallet" aria-label="Open wallet">
+          <span id="mobileWallet">KES 0</span>
+        </button>
+        <a class="avatar avatar--button" href="#/settings" id="mobileAvatar" aria-label="Account settings">A</a>
+      </div>
+    </header>
+
+    <main class="workspace" id="workspace" tabindex="-1"></main>
+
+    <nav class="tabbar" aria-label="Workspace">
+      <a href="#/app" data-nav="dashboard"><svg class="i"><use href="#i-home"></use></svg><span>Home</span></a>
+      <a href="#/open" data-nav="open"><svg class="i"><use href="#i-users"></use></svg><span>Open</span></a>
+      <a href="#/g" data-nav="circle"><svg class="i"><use href="#i-circle"></use></svg><span>Circle</span></a>
+      <a href="#/g/auction" data-nav="auction" class="tabbar__primary"><span class="tabbar__wheel"><svg class="i"><use href="#i-wheel"></use></svg></span><span>Wheel</span></a>
+      <a href="#/g/ledger" data-nav="ledger"><svg class="i"><use href="#i-ledger"></use></svg><span>Ledger</span></a>
+      <a href="#/settings" data-nav="settings"><svg class="i"><use href="#i-user"></use></svg><span>Account</span></a>
+    </nav>
+
+    <div class="jarvis" id="jarvisRoot">
+      <section class="jarvis__panel" id="jarvisPanel" hidden aria-label="NURU assistant">
+        <header class="jarvis__head">
+          <span class="jarvis__id"><span class="jarvis__dot"></span>NURU <em>ON CALL</em></span>
+          <button class="jarvis__close" type="button" data-action="jarvis-close" aria-label="Close NURU">×</button>
+        </header>
+        <div class="jarvis__log" id="jarvisLog" role="log" aria-live="polite"></div>
+        <form class="jarvis__form" data-form="jarvis-ask" novalidate>
+          <button class="jarvis__mic" id="jarvisMic" type="button" data-action="jarvis-mic" aria-label="Speak to NURU"><svg class="i"><use href="#i-mic"></use></svg></button>
+          <input class="jarvis__input" name="ask" autocomplete="off" maxlength="200" placeholder="Say “balance”, “next turn”, “invite code”…" aria-label="Ask NURU">
+          <button class="btn btn--lime btn--sm" type="submit">Send</button>
+        </form>
+        <p class="jarvis__hint" id="jarvisHint">I listen only while the mic is open. Money always waits for your confirmation.</p>
+      </section>
+      <button class="jarvis__orb" id="jarvisOrb" type="button" data-action="jarvis-open" aria-label="Call NURU" aria-expanded="false" aria-controls="jarvisPanel">
+        <span class="jarvis__ring"></span>
+        <svg class="i"><use href="#i-star"></use></svg>
+        <span>NURU</span>
+      </button>
+    </div>
+  </div>
+
+  <dialog class="dialog dialog--auth" id="authDialog" data-stage="0" aria-label="Account access">
+    <div class="auth">
+      <div class="auth__aside">
+        <div class="auth__brand"><span class="brand__mark"><svg class="i"><use href="#i-wheel"></use></svg></span> THE WHEEL</div>
+        <p class="eyebrow">Private circle access</p>
+        <h2 id="authAsideTitle">Your seat at the wheel.</h2>
+        <p id="authAsideCopy">A passkey is your key. No password to leak, no SMS code to intercept. The circle stays yours.</p>
+        <a class="auth-orbit" href="#/practice" aria-label="Explore all six seats in practice mode">
+          <span class="auth-orbit__track"></span><span class="auth-orbit__track auth-orbit__track--inner"></span>
+          <span class="auth-orbit__core"><svg class="i"><use href="#i-key"></use></svg><b>YOUR SEAT</b><em>One key. Your circle.</em></span>
+          <i style="--seat:0">A</i><i style="--seat:1">B</i><i style="--seat:2">C</i><i style="--seat:3">D</i><i style="--seat:4">E</i><i style="--seat:5">F</i>
+          <span class="auth-orbit__hint">Explore the circle <svg class="i"><use href="#i-arrow"></use></svg></span>
+        </a>
+        <ol class="auth__assurances">
+          <li><b>01</b><span><strong>Passkey-first</strong>Face, fingerprint or device PIN. No password to leak.</span></li>
+          <li><b>02</b><span><strong>Recovery offline</strong>Ten single-use codes. Your private key is never sent to us.</span></li>
+          <li><b>03</b><span><strong>Payout verified</strong>Your phone is checked by the organizer before the first payout.</span></li>
+        </ol>
+        <div class="auth__locale"><span>KES</span><span>Africa/Nairobi</span><span>Record-keeper, not lender</span></div>
+      </div>
+      <div class="auth__main">
+        <button class="iconbtn auth__close" type="button" data-action="close-auth" aria-label="Close"><svg class="i"><use href="#i-close"></use></svg></button>
+        <div class="auth-device"><svg class="i"><use href="#i-shield"></use></svg><span id="authDeviceStatus">DEVICE ACCESS</span><span class="auth-device__line"></span></div>
+        <div class="auth-console" aria-hidden="true">
+          <div class="dial dial--identity" id="authDialA">
+            <span class="dial__needle"></span><span class="dial__hub"></span><span class="dial__label">IDENTITY</span>
+          </div>
+          <div class="console-core">
+            <div class="console-lamps"><i class="console-lamp console-lamp--a"></i><i class="console-lamp console-lamp--b"></i><i class="console-lamp console-lamp--c"></i></div>
+            <div class="console-readout" id="authReadout"><b>CONSOLE IDLE</b>waiting for a key</div>
+          </div>
+          <div class="dial dial--key" id="authDialB">
+            <span class="dial__needle"></span><span class="dial__hub"></span><span class="dial__label">PASSKEY</span>
+          </div>
+        </div>
+        <div id="authBody" class="auth__body"></div>
+        <a class="auth-practice" href="#/practice"><span class="auth-practice__icon"><svg class="i"><use href="#i-wheel"></use></svg></span><span><b>Explore before you join.</b><small>A complete practice circle. Virtual money. No sign-in.</small></span><svg class="i"><use href="#i-arrow"></use></svg></a>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="dialog dialog--sheet" id="sheet" aria-label="Action">
+    <div class="sheet">
+      <header class="sheet__head">
+        <div><p class="eyebrow" id="sheetKicker">THE WHEEL</p><h2 id="sheetTitle">Action</h2></div>
+        <button class="iconbtn" type="button" data-action="close-sheet" aria-label="Close"><svg class="i"><use href="#i-close"></use></svg></button>
+      </header>
+      <div class="sheet__body" id="sheetBody"></div>
+      <footer class="sheet__foot" id="sheetFoot"></footer>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="audio.js"></script>
+  <script type="module" src="boot.js"></script>
+</body>
+</html>

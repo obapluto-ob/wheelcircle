@@ -1,0 +1,66 @@
+/* Pre-rendered studio plates. The artwork is generated ahead of time and
+   shipped as static files; the browser only moves it. No runtime generation,
+   and every animation stops for reduced motion. */
+
+.arena::before {
+  content: "";
+  position: absolute;
+  inset: -6% -10%;
+  background: url("assets/studio/machine-hall.jpg") 62% 46% / cover no-repeat;
+  opacity: .55;
+  filter: saturate(.92) contrast(1.04);
+  mask-image:
+    radial-gradient(72% 68% at 63% 47%, #000 18%, rgba(0, 0, 0, .55) 56%, transparent 88%),
+    linear-gradient(to top, transparent 2%, #000 22%, #000 82%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    radial-gradient(72% 68% at 63% 47%, #000 18%, rgba(0, 0, 0, .55) 56%, transparent 88%),
+    linear-gradient(to top, transparent 2%, #000 22%, #000 82%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  animation: studio-drift calc(58s * var(--site-motion, 1)) ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes studio-drift {
+  from { transform: scale(1.04) translate3d(0, 0, 0); }
+  to { transform: scale(1.12) translate3d(-1.8%, -1.2%, 0); }
+}
+
+/* The pot-light plate breathes behind the round recap. It sits under the
+   content but above the card's own background, in its own stacking context. */
+.celebrate { isolation: isolate; }
+.celebrate::before {
+  content: "";
+  position: absolute;
+  inset: -12% -8%;
+  z-index: -1;
+  background: url("assets/studio/pot-light.jpg") 74% 8% / cover no-repeat;
+  opacity: .3;
+  mix-blend-mode: screen;
+  filter: saturate(1.05);
+  mask-image:
+    radial-gradient(78% 96% at 76% 4%, #000 6%, rgba(0, 0, 0, .5) 52%, transparent 84%),
+    linear-gradient(105deg, transparent 6%, #000 38%, #000 78%, transparent 98%);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    radial-gradient(78% 96% at 76% 4%, #000 6%, rgba(0, 0, 0, .5) 52%, transparent 84%),
+    linear-gradient(105deg, transparent 6%, #000 38%, #000 78%, transparent 98%);
+  -webkit-mask-composite: source-in;
+  animation: studio-breathe calc(11s * var(--site-motion, 1)) ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes studio-breathe {
+  0%, 100% { transform: scale(1.02); opacity: .24; }
+  50% { transform: scale(1.07); opacity: .38; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arena::before,
+  .celebrate::before { animation: none; }
+}
+
+@media (max-width: 620px) {
+  .arena::before { opacity: .42; }
+  .celebrate::before { opacity: .22; }
+}
